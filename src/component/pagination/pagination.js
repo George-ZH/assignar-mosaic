@@ -20,11 +20,9 @@ class Pagination extends Component {
   ////////// Methods /////////
 
   handleClick(number) {
-    console.log(number);
-    number = Math.max(number,0);
+    number = Math.max(number, 1);
     number = Math.min(number, this.props.pagination.pages);
-
-    console.log(number);
+    
     this.props.photosChangePage(number);
   }
 
