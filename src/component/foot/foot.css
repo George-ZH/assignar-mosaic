@@ -1,0 +1,19 @@
+.foot {
+  background: #303034;
+  bottom:0;
+  width: 100vw;
+  color: #8c8c8c;
+  margin-top: 20px;
+}
+
+.font-email {
+  color: #bababa;
+}
+
+.padding-top-10 {
+  padding-top: 10px;
+}
+
+.padding-bottom-20 {
+  padding-bottom: 20px;
+}
