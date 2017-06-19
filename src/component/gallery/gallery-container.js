@@ -58,7 +58,7 @@ class GalleryContainer extends Component {
       let photosSlice = this.splitPhotos();
 
       return photosSlice.map((photo) => {
-        return <GalleryImage photo={photo} key={photo.id.toString()} />
+        return <GalleryImage photo={photo} key={photo.id} />
       });
     }
   }

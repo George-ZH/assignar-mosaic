@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+// custome
+import { openPhotoModal, closePhotoModal } from '../../actions/photos';
 import ModalImage from '../modal/modal-image';
 
 // css
 import './gallery.css';
 
 class GalleryImage extends Component {
-  constructor() {
-    super();
-    this.state = {isModalOpen: false};
-  }
-
   render(){
     let photo = this.props.photo;
+    let openModal = this.props.isOpenModal.open && this.props.isOpenModal.key === photo.id;
 
     return (
       <div className="col-md-12">
@@ -31,7 +32,7 @@ class GalleryImage extends Component {
             <div className="image-title"> Comments: {photo.comment_count || 0} </div>
           </div>
         </div>
-        <ModalImage isOpen={this.state.isModalOpen}
+        <ModalImage isOpen={openModal}
                     photo={photo}
                     onClose={() => this.closeModal()}
                     action={(data) => this.uploadMosaic(data)}
@@ -43,11 +44,13 @@ class GalleryImage extends Component {
   ////////// Methods /////////
 
   openModal() {
-    this.setState({ isModalOpen: true })
+    this.props.openPhotoModal(this.props.photo.id);
+    // do something else
   }
 
   closeModal() {
-    this.setState({ isModalOpen: false })
+    this.props.closePhotoModal(this.props.photo.id);
+    // do something else
   }
 
   convertDatetimeToString(num){
@@ -56,4 +59,24 @@ class GalleryImage extends Component {
   }
 }
 
-export default GalleryImage;
+////////// link //////////
+
+GalleryImage.propTypes = {
+  photo : PropTypes.object.isRequired,
+  isOpenModal : PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => {
+    return {
+      isOpenModal : state.photoModalIsOpen,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        openPhotoModal: (id) => dispatch(openPhotoModal(id)),
+        closePhotoModal: () => dispatch(closePhotoModal())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GalleryImage);

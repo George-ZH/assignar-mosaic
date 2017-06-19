@@ -33,11 +33,11 @@ export function photoIsUploading(bool) {
 }
 
 export function photoIsUploaded(bool) {
-  //console.log('[Actions] photosFetchDataSuccess');
-  return {
-    type: Types.PHOTOS_IS_UPLOADED,
-    isUploaded: bool,
-  };
+  // then close photo modal
+
+  return (dispatch) => {
+    dispatch(photoModalIsOpen(false));
+  }
 }
 
 export function photosUploadErrored(bool) {
@@ -52,6 +52,25 @@ export function photosChangePage(pageNo) {
     type: Types.PHOTOS_CHANGE_PAGE,
     currentPage: pageNo || 0,
   };
+}
+
+export function photoModalIsOpen(bool, id) {
+  return {
+    type: Types.PHOTOS_MODAL_IS_OPEN,
+    isOpen: {key: id, open: bool},
+  };
+}
+
+export function closePhotoModal(id) {
+  return (dispatch) => {
+    dispatch(photoModalIsOpen(false));
+  }
+}
+
+export function openPhotoModal(id) {
+  return (dispatch) => {
+    dispatch(photoModalIsOpen(true, id));
+  }
 }
 
 export function photoUploading(url) {
@@ -109,8 +128,8 @@ export function photosFetchData(url) {
         dispatch(photosFetchDataSuccess(data.data));
         dispatch(photosIsFetching(false));
       })
-      .catch(() => {
-        dispatch(photosHasErrored(true));
-      });
+      // .catch(() => {
+      //   dispatch(photosHasErrored(true));
+      // });
   };
 }

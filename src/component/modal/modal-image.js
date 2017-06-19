@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // custome
-import { photoUploading, photoIsUploaded } from '../../actions/photos';
+import { photoUploading } from '../../actions/photos';
 
 // css
 import './modal-image.css';
@@ -12,11 +12,6 @@ class ModalImage extends Component {
   render() {
     if (!this.props.isOpen) {
       return <div></div>;
-    }
-
-    if (this.props.isUploaded) {
-      this.props.photoIsUploaded(false);
-      this.props.onClose();
     }
 
     return (
@@ -71,22 +66,18 @@ class ModalImage extends Component {
 
 ModalImage.propTypes = {
   photoUploading : PropTypes.func.isRequired,
-  photoIsUploaded : PropTypes.func.isRequired,
   uploadErrored : PropTypes.bool.isRequired,
-  isUploaded : PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => {
     return {
         uploadErrored : state.photosUploadErrored,
-        isUploaded : state.photosIsUploaded,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         photoUploading: (url) => dispatch(photoUploading(url)),
-        photoIsUploaded: (bool) => dispatch(photoIsUploaded(bool))
     };
 };
 
