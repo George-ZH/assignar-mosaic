@@ -17,6 +17,10 @@ class ModalImage extends Component {
 
     let photoURL = this.props.photoURL || this.props.photo.link;
 
+    if (!this.props.photoURL) {
+      this.convertToBase64(this.props.photo.link, this.props.photoChangeURL);
+    }
+
     return (
       <div className="modal-image">
         <div className="col-md-12 padding-top-20 padding-bottom-20 ">
@@ -68,10 +72,32 @@ class ModalImage extends Component {
     }
   }
 
-  uploadMosaic() {
-    console.log('upload');
+  convertToBase64(src, callback) {
+    let canvas = document.createElement( "canvas" );
+    let ctx = canvas.getContext( "2d" );
 
-    this.props.photoUploading("https://api.imgur.com/3/image");
+    let img = document.createElement( "img" );
+
+    img.crossOrigin="anonymous"
+    img.setAttribute( "src", src);
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+
+      let imageBase64 = canvas.toDataURL("image/jpeg");
+      if (callback) {
+        callback(imageBase64);
+      }
+    };
+  }
+
+  uploadMosaic() {
+    let mosaicElement = document.getElementById("mosaic-svg");
+    let svgData = new XMLSerializer().serializeToString(mosaicElement);
+
+    this.convertToBase64(`data:image/svg+xml;base64,${btoa(svgData)}`, this.props.photoUploading);
   }
 
   readURL(e) {
@@ -104,7 +130,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        photoUploading: (url) => dispatch(photoUploading(url)),
+        photoUploading: (url, data) => dispatch(photoUploading(url, data)),
         photoChangeURL: (url) => dispatch(photoChangeURL(url)),
     };
 };

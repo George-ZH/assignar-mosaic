@@ -112,6 +112,7 @@ class Mosaic extends Component {
     const { width, height } = this.props;
     return (
       <svg
+        id = "mosaic-svg"
         width={width}
         height={height}
         viewBox={`0 0 ${width} ${height}`}

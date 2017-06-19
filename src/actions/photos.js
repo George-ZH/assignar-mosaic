@@ -80,35 +80,35 @@ export function photoChangeURL(newURL) {
   };
 }
 
-export function photoUploading(url) {
-  console.log('uploading: ' + url );
+export function photoUploading(data) {
+  console.log(data);
   return (dispatch) => {
     dispatch(photoIsUploading(true));
 
-    let request = new Request(url, {
+    let postData = new FormData();
+    postData.append('image', data.split(',')[1]);
+
+    let request = new Request("https://api.imgur.com/3/image", {
+      method: "POST",
       headers: new Headers({
+         Accept: 'application/json',
         authorization: 'Client-ID dce0603b7f16623'
-      })
+      }),
+      body: postData,
     });
 
-    dispatch(photoIsUploaded(true));
+    //
 
     // api call
-    // return fetch(request)
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error(response.statusText);
-    //     }
-    //     return response;
-    //   })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     dispatch(photoIsUploading(false));
-    //     dispatch(photoIsUploaded(true));
-    //   })
-    //   .catch(() => {
-    //     dispatch(photosUploadErrored(true));
-    //   });
+    return fetch(request)
+      .then((response) => {
+        console.log(response);
+        if (!response.ok) {
+          throw new Error("Uploaded Error");
+        } else {
+          dispatch(photoIsUploaded(true));
+        }
+    });
   };
 }
 

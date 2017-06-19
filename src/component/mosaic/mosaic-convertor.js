@@ -16,7 +16,7 @@ class MosaicConvertor extends Component {
     }
 
     return (
-      <Mosaic src={this.props.photoSource} tileSize={12} width={600} height={500} tileRenderer={tileRenderer} />
+      <Mosaic src={this.props.photoSource} tileSize={12} width={500} height={500} tileRenderer={tileRenderer} />
     )
   }
 
