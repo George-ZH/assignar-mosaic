@@ -5,7 +5,8 @@ import {
   photosIsFetching,
   photosUploadErrored,
   photosChangePage,
-  photoModalIsOpen
+  photoModalIsOpen,
+  photoDidChangeURL
 } from './photos';
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
     photosIsFetching,
     photosUploadErrored,
     photosChangePage,
-    photoModalIsOpen
+    photoModalIsOpen,
+    photoDidChangeURL
 });

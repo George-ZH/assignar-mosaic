@@ -73,6 +73,13 @@ export function openPhotoModal(id) {
   }
 }
 
+export function photoChangeURL(newURL) {
+  return {
+    type: Types.PHOTO_DID_CHANGE_URL,
+    url: newURL,
+  };
+}
+
 export function photoUploading(url) {
   console.log('uploading: ' + url );
   return (dispatch) => {
