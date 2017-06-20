@@ -3,16 +3,18 @@ import {
   photos,
   photosHasErrored,
   photosIsFetching,
-  photosIsUploaded,
   photosUploadErrored,
-  photosChangePage
+  photosChangePage,
+  photoModalIsOpen,
+  photoDidChangeURL
 } from './photos';
 
 export default combineReducers({
     photos,
     photosHasErrored,
     photosIsFetching,
-    photosIsUploaded,
     photosUploadErrored,
-    photosChangePage
+    photosChangePage,
+    photoModalIsOpen,
+    photoDidChangeURL
 });

@@ -3,10 +3,31 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // custome
-import { photosChangePage } from '../../actions/photos';
+import {
+  photosChangePage
+} from '../../actions/photos';
 
 // css
 import './pagination.css';
+
+/*
+ * @type Class / React Component
+ * @name Pagination
+ *
+ * @description
+ * pagination component, max 10 page number show up
+ *
+ * @param pagination {object} a JSON object, include
+ * - total
+ * - pages
+ * - perPage
+ * @param onPageChange {func} a call back when user change page
+ *
+ * @example
+ * <Pagination pagination={isOpenModal}
+ *             onPageChange={<callback When User Click different page NO.>}
+ * />
+ */
 
 class Pagination extends Component {
   render(){
@@ -19,15 +40,25 @@ class Pagination extends Component {
 
   ////////// Methods /////////
 
+  /* @type method of class GalleryContainer
+   * @name handleClick
+   *
+   * @description
+   * dispatch page update, update the state of currentpage
+   */
   handleClick(number) {
-    console.log(number);
-    number = Math.max(number,0);
+    number = Math.max(number, 1);
     number = Math.min(number, this.props.pagination.pages);
 
-    console.log(number);
     this.props.photosChangePage(number);
   }
 
+  /* @type method of class GalleryContainer
+   * @name generatePageNumberElements
+   *
+   * @description
+   * generate <li> element
+   */
   generatePageNumberElements() {
       if (this.props.pagination.total > 0) {
         let numbers = this.generatePageNumbers(this.props.pagination.pages);
@@ -57,6 +88,14 @@ class Pagination extends Component {
       }
   }
 
+  /* @type method of class GalleryContainer
+   * @name generatePageNumbers
+   *
+   * @description
+   * build a array include all numbers should be displayed
+   *
+   * @return numbers {array} for show up
+   */
   generatePageNumbers(countOfPages) {
     let numbers = [];
 
@@ -83,15 +122,15 @@ class Pagination extends Component {
 
 }
 
-////////// //////////
+////////// adjustable variables //////////
 
-const pageColumns = 8;
-
-//export default Pagination;
+const pageColumns = 10;
 
 ////////// link //////////
 
 Pagination.propTypes = {
+  onPageChange : PropTypes.func,
+  pagination : PropTypes.object.isRequired,
   currentPage : PropTypes.number.isRequired,
 }
 

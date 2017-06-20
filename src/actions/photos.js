@@ -1,7 +1,7 @@
 import * as Types from "./actionTypes";
+import API_URL from "../App.config";
 
 export function photosHasErrored(bool) {
-  //console.log('[Actions] photosHasErrored : ' + bool);
   return {
     type: Types.PHOTOS_HAS_ERRORED,
     hasErrored: bool
@@ -9,7 +9,6 @@ export function photosHasErrored(bool) {
 }
 
 export function photosIsFetching(bool) {
-  //console.log('[Actions] photosIsLoading : ' + bool);
   return {
     type: Types.PHOTOS_IS_FETCHING,
     isFetching: bool
@@ -17,7 +16,6 @@ export function photosIsFetching(bool) {
 }
 
 export function photosFetchDataSuccess(photos) {
-  //console.log('[Actions] photosFetchDataSuccess');
   return {
     type: Types.PHOTOS_FETCH_DATA_SUCCESS,
     photos,
@@ -25,7 +23,6 @@ export function photosFetchDataSuccess(photos) {
 }
 
 export function photoIsUploading(bool) {
-  //console.log('[Actions] photosFetchDataSuccess');
   return {
     type: Types.PHOTOS_IS_UPLOADING,
     isUploading: bool,
@@ -33,11 +30,9 @@ export function photoIsUploading(bool) {
 }
 
 export function photoIsUploaded(bool) {
-  //console.log('[Actions] photosFetchDataSuccess');
-  return {
-    type: Types.PHOTOS_IS_UPLOADED,
-    isUploaded: bool,
-  };
+  return (dispatch) => {
+    dispatch(photoModalIsOpen(false));
+  }
 }
 
 export function photosUploadErrored(bool) {
@@ -54,45 +49,67 @@ export function photosChangePage(pageNo) {
   };
 }
 
-export function photoUploading(url) {
-  console.log('uploading: ' + url );
-  return (dispatch) => {
-    dispatch(photoIsUploading(true));
-
-    let request = new Request(url, {
-      headers: new Headers({
-        authorization: 'Client-ID dce0603b7f16623'
-      })
-    });
-
-    dispatch(photoIsUploaded(true));
-
-    // api call
-    // return fetch(request)
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error(response.statusText);
-    //     }
-    //     return response;
-    //   })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     dispatch(photoIsUploading(false));
-    //     dispatch(photoIsUploaded(true));
-    //   })
-    //   .catch(() => {
-    //     dispatch(photosUploadErrored(true));
-    //   });
+export function photoModalIsOpen(bool, id) {
+  return {
+    type: Types.PHOTOS_MODAL_IS_OPEN,
+    isOpen: {key: id, open: bool},
   };
 }
 
-export function photosFetchData(url) {
+export function closePhotoModal(id) {
+  return (dispatch) => {
+    dispatch(photoModalIsOpen(false));
+  }
+}
+
+export function openPhotoModal(id) {
+  return (dispatch) => {
+    dispatch(photoModalIsOpen(true, id));
+  }
+}
+
+export function photoChangeURL(newURL) {
+  return {
+    type: Types.PHOTO_DID_CHANGE_URL,
+    photoURL: newURL,
+  };
+}
+
+export function photoUploading(data) {
+  return (dispatch) => {
+    dispatch(photoIsUploading(true));
+
+    let postData = new FormData();
+    postData.append('image', data.link.split(',')[1]);
+
+    let request = new Request(API_URL.UPLOAD, {
+      method: "POST",
+      headers: new Headers({
+         Accept: 'application/json',
+        authorization: `Client-ID ${API_URL.AUTH_ID}`
+      }),
+      body: postData,
+    });
+
+    return fetch(request)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Uploaded Error");
+        } else {
+          dispatch(photoIsUploaded(true));
+          dispatch(photoChangeURL(null));
+        }
+    });
+  };
+}
+
+export function photosFetchData() {
   return (dispatch) => {
     dispatch(photosIsFetching(true));
 
-    let request = new Request(url, {
+    let request = new Request(API_URL.GALLERY, {
       headers: new Headers({
-        authorization: 'Client-ID dce0603b7f16623'
+        authorization: `Client-ID ${API_URL.AUTH_ID}`
       })
     });
 

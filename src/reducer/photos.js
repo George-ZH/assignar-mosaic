@@ -35,16 +35,6 @@ export function photos(state = [], action) {
   }
 }
 
-export function photosIsUploaded(state = false, action) {
-  switch (action.type) {
-    case Types.PHOTOS_IS_UPLOADED:
-      return action.isUploaded;
-
-    default:
-      return state;
-  }
-}
-
 export function photosUploadErrored(state = false, action) {
   switch (action.type) {
     case Types.PHOTOS_UPLOAD_ERRORED:
@@ -62,5 +52,25 @@ export function photosChangePage(page = 1, action){
 
     default:
       return page;
+  }
+}
+
+export function photoModalIsOpen(state = {key: 0, open: false}, action) {
+  switch (action.type) {
+    case Types.PHOTOS_MODAL_IS_OPEN:
+      return action.isOpen;
+
+    default:
+      return state;
+  }
+}
+
+export function photoDidChangeURL(state = null, action) {
+  switch (action.type) {
+    case Types.PHOTO_DID_CHANGE_URL:
+      return action.photoURL;
+
+    default:
+      return state;
   }
 }
