@@ -10,17 +10,8 @@
   bottom: 0px;
 }
 
-.icon-lg{
-  font-size: 2.0em;
-  float: right;
-}
-
 .image-modal-container {
   height: 550px;
-}
-
-.image-lg {
-  height: 500px;
 }
 
 .fileUpload {

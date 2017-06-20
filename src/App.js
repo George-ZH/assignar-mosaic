@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 
+import './component/util/util.css';
 import './App.css';
 
 import Header from './component/header/header';

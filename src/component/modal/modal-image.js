@@ -150,8 +150,8 @@ ModalImage.propTypes = {
   onClose : PropTypes.func,
   isOpen : PropTypes.bool.isRequired,
   uploadErrored : PropTypes.bool.isRequired,
-  photoURL : PropTypes.object,
   photo : PropTypes.object.isRequired,
+  photoURL : PropTypes.object,
 
 }
 
