@@ -13,11 +13,37 @@ import {
   decimalToHex
 } from './mosaicutils';
 
+import {
+  convertingElement
+} from '../util/util.elements';
+
+/*
+ * @type Class / React Component
+ * @name Mosaic
+ *
+ * @description
+ * convert image to mosaic
+ *
+ * @param src {string} link/base64 code, but link will not be converted
+ * @param tileSize {number}
+ * @param width {number}
+ * @param height {number}
+ * @param tileRenderer {func}
+ *
+ * @example
+ * <Mosaic src={photoSource}
+ *         tileSize={12}
+ *         width={500}
+ *         height={500}
+ *         tileRenderer={tileRendererFunc}
+ * />
+ */
 class Mosaic extends Component {
   constructor(){
     super();
     this.state = {
       analyseComplete: false,
+      isConverting: true,
       tileList: [],
       columns: 0,
       rows: 0,
@@ -96,6 +122,7 @@ class Mosaic extends Component {
             this.setState(
               {
                 analyseComplete: true,
+                isConverting: false,
                 tileList,
                 columns,
                 rows,
@@ -114,16 +141,22 @@ class Mosaic extends Component {
   render() {
     const { width, height } = this.props;
     return (
-      <svg
-        id = "mosaic-svg"
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns="http://www.w3.org/2000/svg"
-        style={this.props.style}
-      >
-        {this.state.tileList}
-      </svg>
+      <div>
+        {
+            this.state.isConverting
+            ? convertingElement
+            : (<svg id = "mosaic-svg"
+                    width={width}
+                    height={height}
+                    viewBox={`0 0 ${width} ${height}`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={this.props.style}
+              >
+                {this.state.tileList}
+              </svg>)
+        }
+      </div>
+
     );
   }
 }
