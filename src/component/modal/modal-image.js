@@ -76,7 +76,7 @@ class ModalImage extends Component {
             <button className="btn btn-primary col-md-10" style={{ float: "right"}}
                     onClick={() => this.uploadMosaic()}
             >
-                Upload Mosaic Version
+                { this.props.isUploading ? "Uploading ..." : "Upload Mosaic Version" }
             </button>
           </div>
           <div className="col-md-6">
@@ -149,6 +149,7 @@ ModalImage.propTypes = {
   photoChangeURL : PropTypes.func.isRequired,
   onClose : PropTypes.func,
   isOpen : PropTypes.bool.isRequired,
+  isUploading: PropTypes.bool.isRequired,
   uploadErrored : PropTypes.bool.isRequired,
   photo : PropTypes.object.isRequired,
   photoURL : PropTypes.object,
@@ -159,6 +160,7 @@ const mapStateToProps = (state) => {
     return {
         uploadErrored : state.photosUploadErrored,
         photoURL : state.photoDidChangeURL,
+        isUploading : state.photosIsUploading,
     };
 };
 

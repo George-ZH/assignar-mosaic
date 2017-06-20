@@ -24,6 +24,18 @@ export function photosIsFetching(state = false, action) {
   }
 }
 
+export function photosIsUploading(state = false, action) {
+  //console.log(`[Reducers] photosIsLoading: ${action.type}`);
+
+  switch (action.type) {
+    case Types.PHOTOS_IS_UPLOADING:
+      return action.isUploading;
+
+    default:
+      return state;
+  }
+}
+
 export function photos(state = [], action) {
   //console.log(`[Reducers] photos: ${action.type}`);
   switch (action.type) {
