@@ -1,4 +1,5 @@
 import * as Types from "./actionTypes";
+import API_URL from "../App.config";
 
 export function photosHasErrored(bool) {
   //console.log('[Actions] photosHasErrored : ' + bool);
@@ -81,18 +82,17 @@ export function photoChangeURL(newURL) {
 }
 
 export function photoUploading(data) {
-  console.log(data);
   return (dispatch) => {
     dispatch(photoIsUploading(true));
 
     let postData = new FormData();
     postData.append('image', data.split(',')[1]);
 
-    let request = new Request("https://api.imgur.com/3/image", {
+    let request = new Request(API_URL.UPLOAD, {
       method: "POST",
       headers: new Headers({
          Accept: 'application/json',
-        authorization: 'Client-ID dce0603b7f16623'
+        authorization: `Client-ID ${API_URL.AUTH_ID}`
       }),
       body: postData,
     });
@@ -102,7 +102,6 @@ export function photoUploading(data) {
     // api call
     return fetch(request)
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           throw new Error("Uploaded Error");
         } else {
@@ -112,13 +111,13 @@ export function photoUploading(data) {
   };
 }
 
-export function photosFetchData(url) {
+export function photosFetchData() {
   return (dispatch) => {
     dispatch(photosIsFetching(true));
 
-    let request = new Request(url, {
+    let request = new Request(API_URL.GALLERY, {
       headers: new Headers({
-        authorization: 'Client-ID dce0603b7f16623'
+        authorization: `Client-ID ${API_URL.AUTH_ID}`
       })
     });
 
@@ -135,8 +134,8 @@ export function photosFetchData(url) {
         dispatch(photosFetchDataSuccess(data.data));
         dispatch(photosIsFetching(false));
       })
-      // .catch(() => {
-      //   dispatch(photosHasErrored(true));
-      // });
+      .catch(() => {
+        dispatch(photosHasErrored(true));
+      });
   };
 }

@@ -3,11 +3,40 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // custome
-import { photoUploading, photoChangeURL } from '../../actions/photos';
+import {
+  photoUploading,
+  photoChangeURL
+} from '../../actions/photos';
+
+import {
+  convertToJPEGBase64
+} from '../util/util.funcs';
+
 import MosaicConvertor from '../mosaic/mosaic-convertor';
 
 // css
 import './modal-image.css';
+
+/*
+ * @type Class / React Component
+ * @name ModalImage
+ *
+ * @description
+ * - a popup window, full screen, show current selected image, then convert to
+ * mosaic version
+ * - allow user choose upload mosaic version to imgur
+ * - allow user upload their own image
+ *
+ * @param isOpen {bool} close/open this modal
+ * @param photo {object} a JSON object about the photo
+ * @param onClose {func} a call back when user close this modal
+ *
+ * @example
+ * <ModalImage isOpen={isOpenModal}
+ *             photo={photo}
+ *             onClose={<callbackWhenCloseWindow>}
+ * />
+ */
 
 class ModalImage extends Component {
   render() {
@@ -18,7 +47,7 @@ class ModalImage extends Component {
     let photoURL = this.props.photoURL || this.props.photo.link;
 
     if (!this.props.photoURL) {
-      this.convertToBase64(this.props.photo.link, this.props.photoChangeURL);
+      convertToJPEGBase64(this.props.photo.link, this.props.photoChangeURL);
     }
 
     return (
@@ -63,6 +92,14 @@ class ModalImage extends Component {
 
   ////////// Methods ////////
 
+  /* @type method of class GalleryContainer
+   * @name close
+   *
+   * @description
+   * clean photo link, then execute passed callback
+   * close this modal
+   *
+   */
   close(e) {
     e.preventDefault();
 
@@ -72,34 +109,23 @@ class ModalImage extends Component {
     }
   }
 
-  convertToBase64(src, callback) {
-    let canvas = document.createElement( "canvas" );
-    let ctx = canvas.getContext( "2d" );
-
-    let img = document.createElement( "img" );
-
-    img.crossOrigin="anonymous"
-    img.setAttribute( "src", src);
-
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-
-      let imageBase64 = canvas.toDataURL("image/jpeg");
-      if (callback) {
-        callback(imageBase64);
-      }
-    };
-  }
-
+  /* @type method of class GalleryContainer
+   * @name uploadMosaic
+   * @description
+   * upload mosaic version (base64) to Imgur
+   */
   uploadMosaic() {
     let mosaicElement = document.getElementById("mosaic-svg");
     let svgData = new XMLSerializer().serializeToString(mosaicElement);
 
-    this.convertToBase64(`data:image/svg+xml;base64,${btoa(svgData)}`, this.props.photoUploading);
+    convertToJPEGBase64(`data:image/svg+xml;base64,${btoa(svgData)}`, this.props.photoUploading);
   }
 
+  /* @type method of class GalleryContainer
+   * @name readURL
+   * @description
+   * show up the image user uploaded
+   */
   readURL(e) {
     let reader = new FileReader();
     let file = e.target.files[0];
@@ -112,13 +138,18 @@ class ModalImage extends Component {
   }
 }
 
-////////// link //////////
+////////// - Link - //////////
 
 ModalImage.propTypes = {
   photoUploading : PropTypes.func.isRequired,
   photoChangeURL : PropTypes.func.isRequired,
+  uploadMosaic : PropTypes.func.isRequired,
+  onClose : PropTypes.func,
+  isOpen : PropTypes.bool.isRequired,
   uploadErrored : PropTypes.bool.isRequired,
   photoURL : PropTypes.string,
+  photo : PropTypes.object.isRequired,
+
 }
 
 const mapStateToProps = (state) => {
