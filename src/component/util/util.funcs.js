@@ -7,6 +7,7 @@
  */
 export const convertToJPEGBase64 = (src, callback) => {
   const maxHeight = 500;
+  const maxWidth = 500;
 
   let canvas = document.createElement( "canvas" );
   let ctx = canvas.getContext( "2d" );
@@ -18,6 +19,7 @@ export const convertToJPEGBase64 = (src, callback) => {
 
   img.onload = () => {
     let rate = Math.min(maxHeight / img.height, 1);
+    rate = Math.min(maxWidth / img.width, rate);
 
     canvas.width = img.width * rate;
     canvas.height = img.height * rate;
