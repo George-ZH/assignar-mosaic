@@ -6,8 +6,8 @@ import thunk from 'redux-thunk'
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
-const jobMockData = {
-  "jobs": [
+const photosMockData = {
+  "data": [
     {
       "id": "Jy4Yo",
       "title": "these are so cute omg",
@@ -22,53 +22,34 @@ const jobMockData = {
       "layout": null,
       "views": 27020,
       "link": "http://imgur.com/a/Jy4Yo",
-      "ups": null,
-      "downs": null,
-      "points": null,
-      "score": 27008,
-      "is_album": true,
-      "vote": null,
-      "favorite": null,
-      "nsfw": false,
-      "section": "aww",
-      "comment_count": null,
-      "topic": null,
-      "topic_id": null,
-      "images_count": 16,
-      "in_gallery": true,
-      "is_ad": false,
-      "tags": [],
-      "ad_type": 0,
-      "ad_url": "",
-      "in_most_viral": false
     },
   ]
 };
 
-describe('Job Actions', () => {
-  it('should create an action to add a todo', () => {
+describe('Photos Actions', () => {
+  it('should create an action when fetching ready', () => {
     const loading = true;
     const expectedAction = {
-      type: types.JOBS_IS_LOADING,
-      isLoading: true
+      type: types.PHOTOS_IS_FETCHING,
+      isFetching: true
     }
 
-    expect(actions.jobsIsLoading(loading)).toEqual(expectedAction)
+    expect(actions.photosIsFetching(loading)).toEqual(expectedAction)
   });
 
-  it('creates JOBS_FETCH_DATA_SUCCESS when fetching jobs has been done', () => {
-    fetch.mockResponse(JSON.stringify(jobMockData), { status: 200});
+  it('creates PHOTOS_FETCH_DATA_SUCCESS when fetching photos has been done', () => {
+    fetch.mockResponse(JSON.stringify(photosMockData), { status: 200});
 
     const expectedActions = [
-      {type: types.JOBS_IS_LOADING, isLoading: true},
-      {type: types.JOBS_FETCH_DATA_SUCCESS, jobs: jobMockData.jobs},
-      {type: types.JOBS_IS_LOADING, isLoading: false}
+      {type: types.PHOTOS_IS_FETCHING, isFetching: true},
+      {type: types.PHOTOS_FETCH_DATA_SUCCESS, photos: photosMockData.data},
+      {type: types.PHOTOS_IS_FETCHING, isFetching: false}
     ];
 
-    const store = mockStore({ jobs: [] })
+    const store = mockStore({ photos: [] })
 
     return store.dispatch(
-      actions.jobsFetchData("https://s3-ap-southeast-2.amazonaws.com/hipgrp-assets/tech-test/jobs.json")
+      actions.photosFetchData()
     ).then(() => { // return of async actions
       expect(store.getActions()).toEqual(expectedActions)
     });

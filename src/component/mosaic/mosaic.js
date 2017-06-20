@@ -14,14 +14,17 @@ import {
 } from './mosaicutils';
 
 class Mosaic extends Component {
-  state = {
-    analyseComplete: false,
-    tileList: [],
-    columns: 0,
-    rows: 0,
-    width: 0,
-    height: 0
-  };
+  constructor(){
+    super();
+    this.state = {
+      analyseComplete: false,
+      tileList: [],
+      columns: 0,
+      rows: 0,
+      width: 0,
+      height: 0
+    };
+  }
 
   componentWillReceiveProps() {
     this.setState({ analyseComplete: false, tileList: [] });
