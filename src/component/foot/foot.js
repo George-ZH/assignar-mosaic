@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+
 import './foot.css';
 
 class Foot extends Component {

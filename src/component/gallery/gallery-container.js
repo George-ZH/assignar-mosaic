@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // custome
 import {
   errorElement,
-  loadingElement
+  loadingElementCircle
 } from '../util/util.elements';
 
 import {
@@ -69,11 +69,11 @@ class GalleryContainer extends Component {
     }
 
     if (this.props.isFetching) {
-      return loadingElement;
+      return loadingElementCircle;
     }
 
     if (this.props.photos.length === 0) {
-      return loadingElement;
+      return loadingElementCircle;
     } else {
       this.pagination.total = this.props.photos.length;
       this.pagination.pages = Math.ceil(this.pagination.total / this.pagination.perPage);
