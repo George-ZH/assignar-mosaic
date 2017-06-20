@@ -133,8 +133,8 @@ class Mosaic extends Component {
 Mosaic.propTypes = {
   src: PropTypes.string.isRequired,
   tileSize: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
   onProgress: PropTypes.func,
   tileRenderer: PropTypes.func
 };
