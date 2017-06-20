@@ -122,11 +122,9 @@ class Pagination extends Component {
 
 }
 
-////////// //////////
+////////// adjustable variables //////////
 
 const pageColumns = 10;
-
-//export default Pagination;
 
 ////////// link //////////
 
