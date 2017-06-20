@@ -93,8 +93,6 @@ class GalleryImage extends Component {
 GalleryImage.propTypes = {
   photo : PropTypes.object.isRequired,
   modalState : PropTypes.object.isRequired,
-  openModal : PropTypes.func.isRequired,
-  closeModal : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {

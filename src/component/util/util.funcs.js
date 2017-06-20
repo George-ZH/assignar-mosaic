@@ -6,6 +6,8 @@
  * support pass callback
  */
 export const convertToJPEGBase64 = (src, callback) => {
+  const maxHeight = 500;
+
   let canvas = document.createElement( "canvas" );
   let ctx = canvas.getContext( "2d" );
 
@@ -15,13 +17,23 @@ export const convertToJPEGBase64 = (src, callback) => {
   img.setAttribute( "src", src);
 
   img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
+    let rate = Math.min(maxHeight / img.height, 1);
+
+    canvas.width = img.width * rate;
+    canvas.height = img.height * rate;
+
+    ctx.drawImage(img,
+      0, 0, img.width, img.height, // original size
+      0, 0, canvas.width, canvas.height // resize
+    );
 
     let imageBase64 = canvas.toDataURL("image/jpeg");
     if (callback) {
-      callback(imageBase64);
+      callback({
+        link : imageBase64,
+        width :canvas.width,
+        height : canvas.height
+      });
     }
   };
 }

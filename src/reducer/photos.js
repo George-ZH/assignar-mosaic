@@ -68,7 +68,7 @@ export function photoModalIsOpen(state = {key: 0, open: false}, action) {
 export function photoDidChangeURL(state = null, action) {
   switch (action.type) {
     case Types.PHOTO_DID_CHANGE_URL:
-      return action.url;
+      return action.photoURL;
 
     default:
       return state;

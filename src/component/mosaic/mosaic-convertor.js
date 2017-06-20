@@ -20,12 +20,17 @@ const tileRenderer = props => (
  */
 class MosaicConvertor extends Component {
   render() {
-    if (!this.props.photoSource) {
+    if (!this.props.photoSource.link) {
         return <div> Converting ... </div>
     }
 
     return (
-      <Mosaic src={this.props.photoSource} tileSize={12} width={500} height={500} tileRenderer={tileRenderer} />
+      <Mosaic src={this.props.photoSource.link}
+              tileSize={12}
+              width={this.props.photoSource.width}
+              height={this.props.photoSource.height}
+              tileRenderer={tileRenderer}
+      />
     )
   }
 
@@ -34,7 +39,7 @@ class MosaicConvertor extends Component {
 ////////// Link //////////
 
 MosaicConvertor.propTypes = {
-  photoSource: PropTypes.string,
+  photoSource: PropTypes.object,
 }
 
 // link state and props if needed

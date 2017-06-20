@@ -71,7 +71,7 @@ export function openPhotoModal(id) {
 export function photoChangeURL(newURL) {
   return {
     type: Types.PHOTO_DID_CHANGE_URL,
-    url: newURL,
+    photoURL: newURL,
   };
 }
 
@@ -80,7 +80,7 @@ export function photoUploading(data) {
     dispatch(photoIsUploading(true));
 
     let postData = new FormData();
-    postData.append('image', data.split(',')[1]);
+    postData.append('image', data.link.split(',')[1]);
 
     let request = new Request(API_URL.UPLOAD, {
       method: "POST",

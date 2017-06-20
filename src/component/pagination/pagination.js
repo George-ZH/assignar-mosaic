@@ -129,8 +129,6 @@ const pageColumns = 10;
 ////////// link //////////
 
 Pagination.propTypes = {
-  generatePageNumbers : PropTypes.func.isRequired,
-  generatePageNumberElements : PropTypes.func.isRequired,
   onPageChange : PropTypes.func,
   pagination : PropTypes.object.isRequired,
   currentPage : PropTypes.number.isRequired,

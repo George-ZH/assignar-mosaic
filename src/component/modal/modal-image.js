@@ -44,7 +44,7 @@ class ModalImage extends Component {
       return <div></div>;
     }
 
-    let photoURL = this.props.photoURL || this.props.photo.link;
+    let photoURL = this.props.photoURL || this.props.photo;
 
     if (!this.props.photoURL) {
       convertToJPEGBase64(this.props.photo.link, this.props.photoChangeURL);
@@ -61,7 +61,7 @@ class ModalImage extends Component {
         <div className="col-md-12 image-modal-container">
           <div className="col-md-6">
             <img className="image-lg img-thumbnail"
-                 src={photoURL}
+                 src={photoURL.link}
                  alt={this.props.photo.id}
             />
           </div>
@@ -104,7 +104,7 @@ class ModalImage extends Component {
     e.preventDefault();
 
     this.props.photoChangeURL(null);
-    
+
     if (this.props.onClose) {
       this.props.onClose()
     }
@@ -132,7 +132,10 @@ class ModalImage extends Component {
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      this.props.photoChangeURL(reader.result);
+      convertToJPEGBase64(
+        reader.result,
+        this.props.photoChangeURL
+      );
     }
 
     reader.readAsDataURL(file);
@@ -144,11 +147,10 @@ class ModalImage extends Component {
 ModalImage.propTypes = {
   photoUploading : PropTypes.func.isRequired,
   photoChangeURL : PropTypes.func.isRequired,
-  uploadMosaic : PropTypes.func.isRequired,
   onClose : PropTypes.func,
   isOpen : PropTypes.bool.isRequired,
   uploadErrored : PropTypes.bool.isRequired,
-  photoURL : PropTypes.string,
+  photoURL : PropTypes.object,
   photo : PropTypes.object.isRequired,
 
 }
