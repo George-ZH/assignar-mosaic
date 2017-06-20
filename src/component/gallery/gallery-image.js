@@ -42,12 +42,13 @@ class GalleryImage extends Component {
     return (
       <div className="col-md-12">
         <div className="gallery-image">
-          <div className="col-md-2 image-container">
+          <div className="col-md-2 image-container image-tooltip">
             <img className="image-sm img-thumbnail"
                  src={photo.link}
                  alt="Card"
                  onClick={() => this.openModal()}
             />
+            <span className="image-tooltiptext">Try Mosaic</span>
           </div>
           <div className="col-md-10 border-left padding-top-10">
             <div className="image-title"> {photo.title} </div>

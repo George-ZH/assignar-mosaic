@@ -101,3 +101,26 @@
   border-right: thin dashed #EEEEEE;
   height: 100%;
 }
+
+/* Tooltip container */
+.image-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.image-tooltip .image-tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #303034;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 9;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.image-tooltip:hover .image-tooltiptext {
+    visibility: visible;
+}
