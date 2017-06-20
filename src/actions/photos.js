@@ -96,8 +96,8 @@ export function photoUploading(data) {
         if (!response.ok) {
           throw new Error("Uploaded Error");
         } else {
-          dispatch(photoChangeURL(null));
           dispatch(photoIsUploaded(true));
+          dispatch(photoChangeURL(null));
         }
     });
   };
