@@ -2,7 +2,6 @@ import * as Types from "./actionTypes";
 import API_URL from "../App.config";
 
 export function photosHasErrored(bool) {
-  //console.log('[Actions] photosHasErrored : ' + bool);
   return {
     type: Types.PHOTOS_HAS_ERRORED,
     hasErrored: bool
@@ -10,7 +9,6 @@ export function photosHasErrored(bool) {
 }
 
 export function photosIsFetching(bool) {
-  //console.log('[Actions] photosIsLoading : ' + bool);
   return {
     type: Types.PHOTOS_IS_FETCHING,
     isFetching: bool
@@ -18,7 +16,6 @@ export function photosIsFetching(bool) {
 }
 
 export function photosFetchDataSuccess(photos) {
-  //console.log('[Actions] photosFetchDataSuccess');
   return {
     type: Types.PHOTOS_FETCH_DATA_SUCCESS,
     photos,
@@ -26,7 +23,6 @@ export function photosFetchDataSuccess(photos) {
 }
 
 export function photoIsUploading(bool) {
-  //console.log('[Actions] photosFetchDataSuccess');
   return {
     type: Types.PHOTOS_IS_UPLOADING,
     isUploading: bool,
@@ -34,8 +30,6 @@ export function photoIsUploading(bool) {
 }
 
 export function photoIsUploaded(bool) {
-  // then close photo modal
-
   return (dispatch) => {
     dispatch(photoModalIsOpen(false));
   }
@@ -97,14 +91,12 @@ export function photoUploading(data) {
       body: postData,
     });
 
-    //
-
-    // api call
     return fetch(request)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Uploaded Error");
         } else {
+          dispatch(photoChangeURL(null));
           dispatch(photoIsUploaded(true));
         }
     });

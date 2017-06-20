@@ -104,6 +104,7 @@ class ModalImage extends Component {
     e.preventDefault();
 
     this.props.photoChangeURL(null);
+    
     if (this.props.onClose) {
       this.props.onClose()
     }
