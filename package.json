@@ -1,5 +1,5 @@
 {
-  "name": "hipage-test",
+  "name": "assignar-mosatic",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -32,9 +32,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack",
+    "build": "react-scripts build",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "npm run test --watch"
   },
   "jest": {
     "transform": {
