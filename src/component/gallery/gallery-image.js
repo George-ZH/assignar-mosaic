@@ -42,7 +42,7 @@ class GalleryImage extends Component {
     return (
       <div className="col-md-12">
         <div className="gallery-image">
-          <div className="col-md-2 image-container image-tooltip">
+          <div className="col-md-2 col-xs-4 image-container image-tooltip">
             <img className="image-sm img-thumbnail"
                  src={photo.link}
                  alt="Card"
@@ -50,12 +50,12 @@ class GalleryImage extends Component {
             />
             <span className="image-tooltiptext">Try Mosaic</span>
           </div>
-          <div className="col-md-10 border-left padding-top-10">
-            <div className="image-title"> {photo.title} </div>
+          <div className="col-md-10 col-xs-8 border-left padding-top-10">
+            <div className="image-text"> {photo.title} </div>
             <br/><br/>
-            <div className="image-title"> Publish: {convertDatetimeToString(photo.datetime)} </div>
+            <div className="image-text"> Publish: {convertDatetimeToString(photo.datetime)} </div>
             <br/>
-            <div className="image-title"> Comments: {photo.comment_count || 0} </div>
+            <div className="image-text"> Comments: {photo.comment_count || 0} </div>
           </div>
         </div>
         <ModalImage isOpen={isOpenModal}

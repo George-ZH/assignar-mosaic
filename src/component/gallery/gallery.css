@@ -31,7 +31,8 @@
   margin: 5px;
 }
 
-.image-title {
+.image-text {
   float: left;
   padding-left: 10px;
+  font-size: 0.9em;
 }

@@ -59,27 +59,27 @@ class ModalImage extends Component {
           </span>
         </div>
         <div className="col-md-12 image-modal-container">
-          <div className="col-md-6">
+          <div className="col-md-6 col-xs-6">
             <img className="image-lg img-thumbnail"
                  src={photoURL.link}
                  alt={this.props.photo.id}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 col-xs-6">
             <div className="image-lg img-thumbnail">
               <MosaicConvertor photoSource={photoURL}/>
             </div>
           </div>
         </div>
         <div className="col-md-12 padding-top-20 padding-bottom-20">
-          <div className="col-md-6">
+          <div className="col-md-6 col-xs-6">
             <button className="btn btn-primary col-md-10" style={{ float: "right"}}
                     onClick={() => this.uploadMosaic()}
             >
                 { this.props.isUploading ? "Uploading ..." : "Upload Mosaic Version" }
             </button>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 col-xs-6">
             <div className="fileUpload btn btn-primary col-md-10">
               <span>Upload Your Own Picture</span>
               <input className="upload" type='file' onChange={(e) => this.readURL(e)} />

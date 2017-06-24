@@ -28,7 +28,7 @@
 }
 
 .image-lg {
-  height: 500px;
+  max-height: 500px;
 }
 
 .font-sm {
