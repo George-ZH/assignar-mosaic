@@ -9,6 +9,10 @@ import {
 } from '../../actions/photos';
 
 import {
+  loadingElementCircle
+} from '../util/util.elements';
+
+import {
   convertToJPEGBase64
 } from '../util/util.funcs';
 
@@ -44,8 +48,6 @@ class ModalImage extends Component {
       return <div></div>;
     }
 
-    let photoURL = this.props.photoURL || this.props.photo;
-
     if (!this.props.photoURL) {
       convertToJPEGBase64(this.props.photo.link, this.props.photoChangeURL);
     }
@@ -60,14 +62,20 @@ class ModalImage extends Component {
         </div>
         <div className="col-md-12 image-modal-container">
           <div className="col-md-6 col-xs-6">
-            <img className="image-lg img-thumbnail"
-                 src={photoURL.link}
-                 alt={this.props.photo.id}
-            />
+            { this.props.photoURL
+              ? (<img className="image-lg img-thumbnail"
+                   src={this.props.photoURL.link}
+                   alt={this.props.photo.id}
+                 />)
+              : (<div className="img-thumbnail">{loadingElementCircle}</div>)
+            }
           </div>
           <div className="col-md-6 col-xs-6">
             <div className="image-lg img-thumbnail">
-              <MosaicConvertor photoSource={photoURL}/>
+              { this.props.photoURL
+                ? (<MosaicConvertor photoSource={this.props.photoURL}/>)
+                : (loadingElementCircle)
+              }
             </div>
           </div>
         </div>
